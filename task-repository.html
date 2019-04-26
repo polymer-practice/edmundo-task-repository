@@ -36,7 +36,7 @@
         };
       } 
       static get observers() {
-        return [ '_updatePage(offset, limit)']
+        return [ '_getPage(offset, limit)']
       }
 
         constructor() {
@@ -165,10 +165,10 @@
         ]
       }
         
-      getPage() {
+      _getPage(offset, limit) {
         const leng = this.tasklist.length;
-        let start = this.offset;
-        let end = this.offset + this.limit;
+        let start = offset;
+        let end = offset + limit;
         let pageEvent;
         if (start < 0) {
           start = 0;
@@ -183,8 +183,8 @@
             composed: true,
             detail: {
               total: leng,
-              offset: this.offset,
-              limit: this.limit,
+              offset: offset,
+              limit: limit,
               page: this.tasklist.slice(start, end)
             }
           }
@@ -193,13 +193,7 @@
           this.dispatchEvent(pageEvent);
         }, 300);
       }
-      _updatePage(offset, limit) {
-        // setInterval(()=>{
-        //   this.offset++;
-        //   this.limit++;
-        // },1500);
-        this.getPage();
-      }
+
       _addNewTask(newValue) {
       
         let taskEvent = new CustomEvent(
@@ -217,7 +211,7 @@
 
       }
       _updateTask(valueToUpdate) {
-        const index = this.tasklist.findIndex(task => task.key===valueToUpdate.key);
+        const index = this.tasklist.findIndex(task => task.key === valueToUpdate.key);
         this.tasklist[index].title = valueToUpdate.title;
         this.tasklist[index].canceled = valueToUpdate.canceled;
         this.tasklist[index].done = valueToUpdate.done;
