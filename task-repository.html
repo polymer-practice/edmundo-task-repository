@@ -28,6 +28,10 @@
           newTask: {
             type: Object,
             observer: '_addNewTask'
+          },
+          taskToUpdate: {
+            type: Object,
+            observer: '_updateTask'
           }
         };
       } 
@@ -207,6 +211,25 @@
         );
         this.tasklist.unshift(newValue);
         console.log('New task list: ', this.tasklist);
+        setTimeout(() => {
+          this.dispatchEvent(taskEvent);
+        }, 300);
+
+      }
+      _updateTask(valueToUpdate) {
+        const index = this.tasklist.findIndex(task => task.key===valueToUpdate.key);
+        this.tasklist[index].title = valueToUpdate.title;
+        this.tasklist[index].canceled = valueToUpdate.canceled;
+        this.tasklist[index].done = valueToUpdate.done;
+        let taskEvent = new CustomEvent(
+          'task-updated',
+          {
+            bubbles: true,
+            composed: true
+          }
+        );
+       
+        console.log('Updated task: ', this.tasklist[index]);
         setTimeout(() => {
           this.dispatchEvent(taskEvent);
         }, 300);
