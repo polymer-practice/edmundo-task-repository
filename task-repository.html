@@ -27,6 +27,10 @@
           }
         };
       } 
+      static get observers() {
+        return [ '_updatePage(offset, limit)']
+      }
+
         constructor() {
         super();
         this.tasklist = [
@@ -180,6 +184,13 @@
         setTimeout(() => {
           this.dispatchEvent(pageEvent)
         }, 300)
+      }
+      _updatePage(offset, limit) {
+        setInterval(()=>{
+          this.offset++;
+          this.limit++;
+        },1500);
+        this.getPage();
       }
     }
     

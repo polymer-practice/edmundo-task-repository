@@ -22,12 +22,11 @@
       <h3>Basic task-repository demo</h3>
       <demo-snippet>
         <template>
-            <task-repository offset="10" limit="5" id="repo"></task-repository>
+            <task-repository offset="10" limit="3" id="repo"></task-repository>
           </template>
           <script>
-            let repo = document.getElementById('repo');
-            repo.addEventListener('page-event', event => { console.log(event.detail); });
-            repo.getPage();
+             let repo = document.getElementById('repo');
+             repo.addEventListener('page-event', event => { console.log(event.detail); });
           </script>
       </demo-snippet>
     </div>
