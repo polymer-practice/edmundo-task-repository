@@ -24,6 +24,10 @@
           limit: {
             type: Number,
             value: 5
+          },
+          newTask: {
+            type: Object,
+            observer: '_addNewTask'
           }
         };
       } 
@@ -180,18 +184,35 @@
               page: this.tasklist.slice(start, end)
             }
           }
-        )
+        );
         setTimeout(() => {
-          this.dispatchEvent(pageEvent)
-        }, 300)
+          this.dispatchEvent(pageEvent);
+        }, 300);
       }
       _updatePage(offset, limit) {
-        setInterval(()=>{
-          this.offset++;
-          this.limit++;
-        },1500);
+        // setInterval(()=>{
+        //   this.offset++;
+        //   this.limit++;
+        // },1500);
         this.getPage();
       }
+      _addNewTask(newValue) {
+      
+        let taskEvent = new CustomEvent(
+          'task-event',
+          {
+            bubbles: true,
+            composed: true
+          }
+        );
+        this.tasklist.unshift(newValue);
+        console.log('New task list: ', this.tasklist);
+        setTimeout(() => {
+          this.dispatchEvent(taskEvent);
+        }, 300);
+
+      }
+
     }
     
 

@@ -27,6 +27,13 @@
           <script>
              let repo = document.getElementById('repo');
              repo.addEventListener('page-event', event => { console.log(event.detail); });
+             repo.addEventListener('task-event', event => { console.log('task created'); });
+               repo.newTask = {
+                key: 20,
+                title: 'Learn reactive Polymer',
+                canceled: false,
+                done: false
+              }
           </script>
       </demo-snippet>
     </div>
